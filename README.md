@@ -17,7 +17,7 @@
 
 ### 整体结构：
 
-- ![程序结构图](F:\python_work\blocknode\src\程序结构图.jpg)
+- ![](https://github.com/DosakaLing/Pure-python-p2p-network/blob/master/%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84%E5%9B%BE.jpg)
 - 由于网络层为目前程序中唯一的层级，因此网络层的主要代码运行在主线程中（不影响后续app的运行，并且带来的好处是程序能先准备好网络层以供app调用）。
 - 程序总体采用了 生产-消费者 的设计模式，使用在python多线程中应用较广的queue对象作为产品池子，程序主线程末端是一个无限循环，将不断从queue对象中消费产品（queue中没有对象时主线程阻塞）并调用相应的handler进行处理。
 - queue中的产品主要是msg，目前的消息内容主要如下图所示（其中提到的client和server均为同一节点的不同part，因为在p2p网络中，每一个节点既是服务端（唯一）又是多个客户端（多个））。
@@ -31,7 +31,7 @@
     | Network | lost_peer |from|sock 对象|server断开连接|
     | Network | handshake_peer |from|"\<serverip\>:\<server port\>"|本节点client向对方server建立连接时将会把自身的server地址发给对方节点，对方节点收到后将会驱动对方的client连接到本地的server|
 ### 网络层结构：
-- ![](F:\python_work\blocknode\src\网络层工作过程.png)
+- ![](https://github.com/DosakaLing/Pure-python-p2p-network/blob/master/%E7%BD%91%E7%BB%9C%E5%B1%82%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B.png)
 - **网络层的运行过程：**
   - 1.首先扫描本机端口，寻找合适的端口作为服务端口。
   - 2.客户端管理器 开启多线程 连接到预设的其他节点的服务器端口（预设列表中去除上一步用于自身服务器的端口）
