@@ -1,4 +1,4 @@
-import threading,time,queue
+import threading,time,queue,json
 from network_foundation import testb_server
 from network_foundation import testb_client
 class clients_handler():
@@ -43,6 +43,16 @@ class clients_handler():
                     pass
         #serverlist_peer |
         if msg['type'] == 'serverlist_peer':
+            content = json.loads(msg['content'])
+            for server_addr in content:
+                server_ip = server_addr.split(':')[0]
+                server_port = int(server_addr.split(':')[1])
+                server_pair = (server_ip,server_port)
+                if (server_pair not in self.clients_to) and \
+                        (server_pair not in self.clients_from) and \
+                        (server_pair != (self.localserverip,self.localserverport)) and \
+                        (server_pair not in self.inirange):
+                    self.create_client(server_pair,self.msglist)
             print(msg['content'])
             pass
     #客户端创建方法
